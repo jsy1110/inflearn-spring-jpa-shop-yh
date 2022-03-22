@@ -42,7 +42,8 @@ public class OrderService {
         Order order = Order.createOrder(member,delivery, orderItem);
 
         //주문 저장 (cascade = CascadeType.ALL 옵션을 줬기 때문에 orderItem 과 Delivery 까지 함께 persist 된다)
-/*      아래와 같은 cascade 는 life cycle 을 충분히 검토해서 사용해야 한다.
+/*
+        아래와 같은 cascade 는 life cycle 을 충분히 검토해서 사용해야 한다.
         @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
         private List<OrderItem> orderItems = new ArrayList<>();
 
