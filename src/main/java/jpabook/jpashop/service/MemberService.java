@@ -48,14 +48,14 @@ public class MemberService {
     /**
      * 회원 전체 조회
      */
-    List<Member> findMembers() {
+    public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
     /**
      * 회원 단건 조회
      */
-    Member findOne(Long memberId) {
+    public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);
     }
 }
