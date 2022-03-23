@@ -32,7 +32,7 @@ public class OrderServiceTest {
         //given
         Member member = createMember("회원1", new Address("용인시", "덕영대로", "123-1"));
 
-        Book book = createBook("JPA 책", 10000, 10);
+        Book book = createBook("JPA 책", 10000, 10,"지승영", "0001");
 
         int orderCount = 2;
 
@@ -48,12 +48,19 @@ public class OrderServiceTest {
         assertEquals("주문 수량만큼 재고가 줄어야 한다.", 8, book.getStockQuantity());
     }
 
-    private Book createBook(String name, int price, int stockQuantity) {
-        Book book = new Book();
+    private Book createBook(String name, int price, int stockQuantity, String author, String isbn) {
+        Book book = new Book.Builder(author, isbn)
+                .setName(name)
+                .setPrice(price)
+                .setStockQuantity(stockQuantity)
+                .build();
+        /*
         book.setName(name);
         book.setPrice(price);
         book.setStockQuantity(stockQuantity);
+        */
         em.persist(book);
+
         return book;
     }
 
@@ -69,7 +76,7 @@ public class OrderServiceTest {
     public void 상품주문_재고수량초과() throws Exception {
         //given
         Member member = createMember("회원1", new Address("용인시", "덕영대로", "123-1"));
-        Book book = createBook("JPA 책", 10000, 10);
+        Book book = createBook("JPA 책", 10000, 10, "지승영", "0001");
 
         int orderCount = 12;
 
@@ -84,7 +91,7 @@ public class OrderServiceTest {
     public void 주문취소() throws Exception {
         //given
         Member member = createMember("시골청년", new Address("시골시", "가곡리", "123-12"));
-        Book book = createBook("도시남자 JPA", 10000, 10);
+        Book book = createBook("JPA 책", 10000, 10, "지승영", "0001");
 
         int orderCount = 2;
         Long orderId = orderService.order(member.getId(), book.getId(), orderCount);

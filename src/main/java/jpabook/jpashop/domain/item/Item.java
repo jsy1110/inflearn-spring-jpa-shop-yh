@@ -45,5 +45,37 @@ public abstract class Item {
         this.stockQuantity -= quantity;
     }
 
+    /**
+     * 빌더 패턴을 이용한 생성자 매개변수 전달 (이펙티브 자바 [아이템2])
+     */
+    abstract static class Builder<T extends Builder<T>> {
+        private Long id;
+
+        private String name;
+        private int price;
+        private int stockQuantity;
+
+        public T setPrice(int val) {
+            price = val;
+            return self();
+        }
+
+        public T setStockQuantity(int val) {
+            stockQuantity = val;
+            return self();
+        }
+
+        public T setName(String val) {
+            name = val;
+            return self();
+        }
+        abstract Item build();
+
+        protected abstract T self();
+    }
+
+    Item(Builder<?> builder) {
+
+    }
 
 }
