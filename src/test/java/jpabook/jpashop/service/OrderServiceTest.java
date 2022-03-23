@@ -49,10 +49,12 @@ public class OrderServiceTest {
     }
 
     private Book createBook(String name, int price, int stockQuantity, String author, String isbn) {
-        Book book = new Book.Builder(author, isbn)
-                .setName(name)
-                .setPrice(price)
-                .setStockQuantity(stockQuantity)
+        Book book = new Book.Builder()
+                .name(name)
+                .price(price)
+                .stockQuantity(stockQuantity)
+                .author(author)
+                .isbn(isbn)
                 .build();
         /*
         book.setName(name);

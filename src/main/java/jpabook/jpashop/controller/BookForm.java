@@ -50,6 +50,10 @@ public class BookForm {
             isbn = val;
             return this;
         }
+
+        public BookForm build() {
+            return new BookForm(this);
+        }
     }
 
     private BookForm(Builder builder) {

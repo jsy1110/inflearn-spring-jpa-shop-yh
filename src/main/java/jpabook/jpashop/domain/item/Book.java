@@ -17,12 +17,17 @@ public class Book extends Item {
      * 빌더 패턴을 이용한 생성자 매개변수 전달 (이펙티브 자바 [아이템2])
      */
     public static class Builder extends Item.Builder<Builder> {
-        private final String author;
-        private final String isbn;
+        private String author;
+        private String isbn;
 
-        public Builder(String author, String isbn) {
-            this.author = author;
-            this.isbn = isbn;
+        public Builder author(String val) {
+            author = val;
+            return this;
+        }
+
+        public Builder isbn(String val) {
+            isbn = val;
+            return this;
         }
 
         @Override
@@ -41,6 +46,4 @@ public class Book extends Item {
         author = builder.author;
         isbn = builder.isbn;
     }
-
-
 }

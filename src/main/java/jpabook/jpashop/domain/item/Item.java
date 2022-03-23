@@ -55,17 +55,17 @@ public abstract class Item {
         private int price;
         private int stockQuantity;
 
-        public T setPrice(int val) {
+        public T price(int val) {
             price = val;
             return self();
         }
 
-        public T setStockQuantity(int val) {
+        public T stockQuantity(int val) {
             stockQuantity = val;
             return self();
         }
 
-        public T setName(String val) {
+        public T name(String val) {
             name = val;
             return self();
         }
@@ -75,7 +75,9 @@ public abstract class Item {
     }
 
     Item(Builder<?> builder) {
-
+        name = builder.name;
+        price = builder.price;
+        stockQuantity = builder.stockQuantity;
     }
 
 }
