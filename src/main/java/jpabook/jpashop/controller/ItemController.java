@@ -22,7 +22,7 @@ public class ItemController {
 
     @PostMapping(value = "/items/new")
     public String create(BookForm form) {
-        Book book = new Book.Builder()
+        Book book = Book.builder()
                 .author(form.getAuthor())
                 .isbn(form.getIsbn())
                 .name(form.getName())

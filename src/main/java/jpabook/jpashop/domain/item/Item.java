@@ -2,7 +2,9 @@ package jpabook.jpashop.domain.item;
 
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter
+@SuperBuilder
 public abstract class Item {
 
     @Id @GeneratedValue
@@ -23,7 +26,8 @@ public abstract class Item {
     private int stockQuantity;
 
     @ManyToMany(mappedBy = "items") // 실무에서는 Many to Many 가 나오는 경우 풀어서 many to one, one to many 로 쪼개자
-    private List<Category> categories= new ArrayList<>();
+    @Builder.Default
+    private List<Category> categories = new ArrayList<>();
 
     //==비즈니스 로직==//
 
@@ -42,41 +46,6 @@ public abstract class Item {
             throw new NotEnoughStockException("need more stock");
         }
         this.stockQuantity -= quantity;
-    }
-
-    /**
-     * 빌더 패턴을 이용한 생성자 매개변수 전달 (이펙티브 자바 [아이템2])
-     */
-    abstract static class Builder<T extends Builder<T>> {
-        private Long id;
-
-        private String name;
-        private int price;
-        private int stockQuantity;
-
-        public T price(int val) {
-            price = val;
-            return self();
-        }
-
-        public T stockQuantity(int val) {
-            stockQuantity = val;
-            return self();
-        }
-
-        public T name(String val) {
-            name = val;
-            return self();
-        }
-        abstract Item build();
-
-        protected abstract T self();
-    }
-
-    Item(Builder<?> builder) {
-        name = builder.name;
-        price = builder.price;
-        stockQuantity = builder.stockQuantity;
     }
 
 }
