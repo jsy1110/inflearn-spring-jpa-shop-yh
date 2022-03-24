@@ -49,7 +49,7 @@ public class OrderServiceTest {
     }
 
     private Book createBook(String name, int price, int stockQuantity, String author, String isbn) {
-        Book book = new Book.Builder()
+        Book book = Book.builder()
                 .name(name)
                 .price(price)
                 .stockQuantity(stockQuantity)

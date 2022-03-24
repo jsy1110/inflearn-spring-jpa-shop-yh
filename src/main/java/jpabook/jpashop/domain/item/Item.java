@@ -4,6 +4,7 @@ import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @DiscriminatorColumn(name = "dtype")
 @Getter
 @SuperBuilder
+@NoArgsConstructor
 public abstract class Item {
 
     @Id @GeneratedValue
