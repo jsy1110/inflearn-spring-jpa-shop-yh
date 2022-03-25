@@ -42,6 +42,7 @@ public class OrderServiceTest {
         //then
         Order getOrder = orderRepository.findOne(orderId);
 
+        assertEquals("상품의 class type 확인", getOrder.getOrderItems().get(0).getItem().getClass(), Book.class);
         assertEquals("상품 주문 시 상태는 ORDER", OrderStatus.ORDER, getOrder.getStatus());
         assertEquals("주문한 상품 종류 수가 정확해야 한다.", 1, getOrder.getOrderItems().size());
         assertEquals("주문 가격은 가격 * 수량이다.", 10000 * orderCount, getOrder.getOrderTotalPrice());
