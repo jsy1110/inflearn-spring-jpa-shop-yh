@@ -1,8 +1,14 @@
 package jpabook.jpashop.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.QMember;
+import jpabook.jpashop.domain.QOrder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -14,6 +20,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class OrderRepository {
 
     private final EntityManager em;
@@ -92,6 +99,33 @@ public class OrderRepository {
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대 1000건
         return query.getResultList();
+    }
+
+    /**
+     * QueryDSL을 이용한 동적쿼리 작성
+     */
+    public List<Order> findAllByQueryDSL(OrderSearch orderSearch) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em); // DI 방법 고민...
+        QOrder order = new QOrder("o");
+        QMember member = new QMember("m");
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if(orderSearch.getOrderStatus() != null) {
+            builder.and(order.status.eq(orderSearch.getOrderStatus()));
+        }
+        if(StringUtils.hasText(orderSearch.getMemberName())) {
+            builder.and(order.member.name.like(orderSearch.getMemberName()));
+        }
+
+        List<Order> result = queryFactory.select(order)
+                .from(order)
+                .join(order.member, member)
+                .where(builder)
+                .limit(1000)
+                .fetch();
+
+        return result;
+
     }
 
     public List<Order> findAll(OrderSearch orderSearch) {
