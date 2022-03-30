@@ -114,7 +114,7 @@ public class OrderRepository {
             builder.and(order.status.eq(orderSearch.getOrderStatus()));
         }
         if(StringUtils.hasText(orderSearch.getMemberName())) {
-            builder.and(order.member.name.like(orderSearch.getMemberName()));
+            builder.and(order.member.name.like("%"+orderSearch.getMemberName()+"%"));
         }
 
         List<Order> result = queryFactory.select(order)
