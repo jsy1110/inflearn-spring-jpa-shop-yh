@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import jpabook.jpashop.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

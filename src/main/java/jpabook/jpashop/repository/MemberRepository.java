@@ -1,11 +1,12 @@
 package jpabook.jpashop.repository;
 
-import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,5 +34,11 @@ public class MemberRepository {
         return em.createQuery("select m from Member m where m.name = :name", Member.class)
                 .setParameter("name", name)
                 .getResultList();
+    }
+
+    public Member findByEmail(String email) {
+        return em.createQuery("select m from Member m where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getSingleResult();
     }
 }
