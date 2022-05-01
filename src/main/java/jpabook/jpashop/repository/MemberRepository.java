@@ -36,6 +36,7 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    // 에러 발생
     public Member findByEmail(String email) {
         return em.createQuery("select m from Member m where m.email = :email", Member.class)
                 .setParameter("email", email)
